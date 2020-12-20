@@ -49,4 +49,43 @@ hist(retardos,right = F,main='Histograma para número de retardos/mes (n=57 mese
 # Diagrama de caja:   Página 75
 # Este diagrama es una poderosa herramienta para explorar un conjunto de datos y aporta información para
 # detectar simetría, examinar la variabilidad y detectar observaciones atípicas.
-
+duracion <- c(30,118,120,123,125,127,130,136,139,141,155,156,158,159,
+              160,160,161,168,170,171,172,174,175,178,178,177,184,185,187,191,191,
+              194,197,199,201,206,208,210,211,217,248,263,265,270,289,322,388,513,
+              520)
+length(duracion) #Tamaño de muestra
+quantile(duracion, 0.25) #Primer Cuartil Q1
+quantile(duracion, 0.5) #Segundo Cuartil Q2
+quantile(duracion, 0.75) #Tercer Cuartil Q3
+IQR(duracion) #Rango intercuartílico
+stripchart(duracion,at = 1.25,xlim=c(-10,550),method='overplot',
+           pch=20,cex = 0.75, col = "blue", main="Número de huecos",xlab="No.
+Huecos")
+mtext("(método overplot)",side=1,line=4,font=3)
+boxplot(duracion, main="Número de huecos",horizontal = T,add=T)
+points(mean(duracion),1, pch = 8,add=T)
+arrows(158, 1.21, 83, 1.21, length = 0.15, angle = 10, code=2)
+text(120.5, 1.225, "1.5*iqr")
+arrows(83, 1.21, 8, 1.21, length = 0.15, angle = 10, code=2)
+text(45, 1.225, "1.5*iqr")
+arrows(208, 1.21, 283, 1.21, length = 0.15, angle = 10, code=2)
+text(245, 1.225, "1.5*iqr")
+arrows(283, 1.21, 358, 1.21, length = 0.15, angle = 10, code=2)
+text(320, 1.225, "1.5*iqr")
+segments(83, 1.3, 83, 0.75,lty=3);text(83, 0.7, "f1")
+segments(8, 1.3, 8, 0.75,lty=3);text(8, 0.7, "F1")
+segments(283, 1.3, 283, 0.75,lty=3);text(283, 0.7, "f3")
+segments(358, 1.3, 358, 0.75,lty=3);text(358, 0.7, "F3")
+# Ejemplo página 80
+oxígeno <- c(5.9,6.1,6.3,6.1,6.0,6.3,6.6,6.4,6.4,6.5,4.8,4.3,5.0,4.7,
+             5.1,6.0,6.2,6.1, 5.8)
+zona <- c("1","1","1","1","1","2","2","2","2","2","3","3","3","3","3",
+          "4","4","4","4")
+zona <- factor(zona);zona
+rb <- boxplot(oxígeno ~ zona, col="bisque", ylab="Oxígeno Disuelto")
+title("Comparando diagrama de caja y media +/- SD")
+mn.t <- tapply(oxígeno, zona, mean);mn.t
+sd.t <- tapply(oxígeno, zona, sd);sd.t
+xi <- 0.3 + seq(rb$n)
+points(xi, mn.t, col ="blue", pch=18)
+arrows(xi, mn.t-sd.t, xi, mn.t+sd.t, code=3, col="red", angle=75,length=.1)
